@@ -97,8 +97,7 @@ require_once 'includes/sidebar.php';
                     #table-kinerja td:last-child,
                     #table-cuti td:last-child {
                         display: none !important;
-                    }
-                    /* Di Payroll, sembunyikan tombol Hapus, biarkan Cetak Slip */
+                    }                    /* Di Payroll, sembunyikan tombol Hapus, biarkan Cetak Slip */
                     .btn-hapus-payroll {
                         display: none !important;
                     }
@@ -106,16 +105,16 @@ require_once 'includes/sidebar.php';
                 <?php endif; ?>
                 <?php
                 // Memanggil panel/halaman fitur secara modular
-                require_once 'pages/dashboard.php';
-                require_once 'pages/karyawan.php';
-                require_once 'pages/kinerja.php';
-                require_once 'pages/payroll.php';
-                require_once 'pages/cuti.php';
-                require_once 'pages/absensi.php';
-                require_once 'pages/mutasi.php';
-                require_once 'pages/pelatihan.php';
-                require_once 'pages/aset.php';
-                require_once 'pages/pengumuman.php';
+                require_once 'modules/dashboard.php';
+                require_once 'modules/karyawan.php';
+                require_once 'modules/kinerja.php';
+                require_once 'modules/payroll.php';
+                require_once 'modules/cuti.php';
+                require_once 'modules/absensi.php';
+                require_once 'modules/mutasi.php';
+                require_once 'modules/pelatihan.php';
+                require_once 'modules/aset.php';
+                require_once 'modules/pengumuman.php';
                 ?>
             </div>
         </main>
@@ -125,5 +124,3 @@ require_once 'includes/sidebar.php';
 // Memuat Footer Tata Letak & Pemanggilan Script Aplikasi
 require_once 'includes/footer.php';
 ?>
-
-
