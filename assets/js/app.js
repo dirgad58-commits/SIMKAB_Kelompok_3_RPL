@@ -939,7 +939,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td><span class="badge active">${pay.status}</span></td>
                 <td style="text-align: center;">
                     <div style="display:flex; gap:6px; justify-content:center;">
-                        <button class="btn btn-secondary btn-icon btn-lihat-slip" data-id="${pay.id}"><i class="fa-solid fa-file-invoice-dollar" style="color:var(--primary-light);"></i></button>
+                        <button class="btn btn-primary btn-sm btn-lihat-slip" style="padding: 5px 10px; font-size: 12px; border-radius: 6px;" data-id="${pay.id}"><i class="fa-solid fa-print"></i> Cetak Slip</button>
                         <button class="btn btn-danger btn-icon btn-hapus-payroll" data-id="${pay.id}"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 </td>
