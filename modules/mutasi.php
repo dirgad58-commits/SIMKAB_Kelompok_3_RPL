@@ -76,7 +76,9 @@
                     </div>
                     <div class="form-group">
                         <label for="mutasi-jabatan-baru">Jabatan Struktural Baru</label>
-                        <input type="text" id="mutasi-jabatan-baru" class="form-control" placeholder="Contoh: Senior CS Officer" required>
+                        <select id="mutasi-jabatan-baru" class="form-control" required disabled>
+                            <option value="">Pilih Divisi Terlebih Dahulu</option>
+                        </select>
                     </div>
                     
                     <div class="form-group full-width">

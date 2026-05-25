@@ -1627,13 +1627,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // 11. FEATURE 7: MUTASI, ROTASI & PROMOSI
     // ==========================================================================
     
-    const btnMutasiKaryawan = document.getElementById('btn-mutasikan-karyawan');
-    const formMutasi = document.getElementById('form-mutasi');
-    const inputSearchMutasi = document.getElementById('mutasi-search');
+    const selectDivisiMutasi = document.getElementById('mutasi-divisi-baru');
+    const selectJabatanMutasi = document.getElementById('mutasi-jabatan-baru');
+
+    function populateMutasiJabatan(divisiValue, preselectedValue = "") {
+        if (!selectJabatanMutasi) return;
+        selectJabatanMutasi.innerHTML = '';
+        
+        if (!divisiValue || !JABATAN_SALARY_MATRIX[divisiValue]) {
+            selectJabatanMutasi.innerHTML = '<option value="">Pilih Divisi Terlebih Dahulu</option>';
+            selectJabatanMutasi.disabled = true;
+            return;
+        }
+
+        selectJabatanMutasi.disabled = false;
+        selectJabatanMutasi.innerHTML = '<option value="">-- Pilih Jabatan Baru Standard --</option>';
+        
+        const jabatans = JABATAN_SALARY_MATRIX[divisiValue];
+        for (const jb in jabatans) {
+            const opt = document.createElement('option');
+            opt.value = jb;
+            opt.textContent = jb;
+            selectJabatanMutasi.appendChild(opt);
+        }
+
+        if (preselectedValue) {
+            selectJabatanMutasi.value = preselectedValue;
+        }
+    }
+
+    if (selectDivisiMutasi) {
+        selectDivisiMutasi.addEventListener('change', () => {
+            populateMutasiJabatan(selectDivisiMutasi.value);
+        });
+    }
 
     if (btnMutasiKaryawan) {
         btnMutasiKaryawan.addEventListener('click', () => {
             formMutasi.reset();
+            populateMutasiJabatan("");
             showModal('modal-mutasi');
         });
     }
