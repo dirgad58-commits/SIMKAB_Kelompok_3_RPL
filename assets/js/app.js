@@ -1626,6 +1626,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const selectDivisiMutasi = document.getElementById('mutasi-divisi-baru');
     const selectJabatanMutasi = document.getElementById('mutasi-jabatan-baru');
+    const btnMutasiKaryawan = document.getElementById('btn-mutasikan-karyawan');
+    const formMutasi = document.getElementById('form-mutasi');
+    const inputSearchMutasi = document.getElementById('mutasi-search');
 
     function populateMutasiJabatan(divisiValue, preselectedValue = "") {
         if (!selectJabatanMutasi) return;

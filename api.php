@@ -781,11 +781,26 @@ try {
                     $_POST['keterangan']
                 ]);
 
+                // Dapatkan standar gaji & tunjangan baru berdasarkan divisi & jabatan baru
+                $stmtNew = $pdo->prepare("SELECT gaji_pokok, tunjangan FROM standar_jabatan WHERE divisi = ? AND nama_jabatan = ?");
+                $stmtNew->execute([$_POST['divisi_baru'], $_POST['jabatan_baru']]);
+                $newSalaryScale = $stmtNew->fetch();
+
+                if ($newSalaryScale) {
+                    $gajiBaru = $newSalaryScale['gaji_pokok'];
+                    $tunjanganBaru = $newSalaryScale['tunjangan'];
+                } else {
+                    $gajiBaru = 0;
+                    $tunjanganBaru = 0;
+                }
+
                 // UPDATE DATA KARYAWAN SECARA DYNAMIC DI MASTER DB!
-                $stmt = $pdo->prepare("UPDATE karyawan SET divisi = ?, jabatan = ? WHERE id = ?");
+                $stmt = $pdo->prepare("UPDATE karyawan SET divisi = ?, jabatan = ?, gaji_pokok = ?, tunjangan = ? WHERE id = ?");
                 $stmt->execute([
                     $_POST['divisi_baru'],
                     $_POST['jabatan_baru'],
+                    $gajiBaru,
+                    $tunjanganBaru,
                     $idKaryawan
                 ]);
 
