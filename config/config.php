@@ -4,6 +4,9 @@
  * config.php - Konfigurasi Koneksi Database MySQL via PDO
  */
 
+// Set Timezone default ke WITA (Kendari / Asia/Makassar)
+date_default_timezone_set('Asia/Makassar');
+
 $host = 'localhost';
 $db_name = 'db_simkab';
 $username = 'root';

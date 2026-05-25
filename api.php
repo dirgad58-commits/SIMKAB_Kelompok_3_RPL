@@ -4,12 +4,13 @@
  * api.php - Central API Controller Handler (JSON Router & MySQL Queries)
  */
 
+// Set Timezone default ke WITA (Kendari / Asia/Makassar)
+date_default_timezone_set('Asia/Makassar');
+
 // Aktifkan Sesi PHP & Ambil Peran Pengguna Aktif
 if (!file_exists(__DIR__ . '/sessions')) { mkdir(__DIR__ . '/sessions', 0777, true); }
 
 session_save_path(__DIR__ . '/sessions');
-@session_start();
-$user_role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 $id_karyawan_session = isset($_SESSION['id_karyawan']) ? $_SESSION['id_karyawan'] : '';
 
 // Set Response Header ke JSON
