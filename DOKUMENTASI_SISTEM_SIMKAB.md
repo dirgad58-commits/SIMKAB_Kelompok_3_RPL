@@ -327,6 +327,13 @@ Fitur ini memanfaatkan sensor lokasi pada perangkat browser karyawan untuk mengu
    Simpan Log Absen    Tampilkan Peringatan Merah
 ```
 
+3. **Aturan Batas Waktu & Keterlambatan Absensi (Lateness Rules):**
+   Untuk menjaga kedisiplinan operasional bank, sistem menetapkan batasan waktu kehadiran secara otomatis berdasarkan waktu pengiriman check-in (*Server Time* WITA / `Asia/Makassar`):
+   * **Status "Hadir" (Tepat Waktu):** Karyawan melakukan *Check In* antara pukul **00:00:00 s.d 08:00:00 pagi**.
+   * **Status "Terlambat":** Karyawan melakukan *Check In* antara pukul **08:00:01 s.d 09:00:00 pagi**.
+   * **Status "Tidak Hadir" (Mangkir/Alfa):** Karyawan melakukan *Check In* **di atas pukul 09:00:00 pagi** (seperti check-in pada siang/sore hari). Status secara otomatis ditolak sebagai keterlambatan absolut dan disimpan sebagai "Tidak Hadir" di database utama absensi.
+   * **Pengecualian Khusus (Demo Bypass):** Untuk kelancaran uji coba dan presentasi aplikasi di luar jam operasional kantor normal, sistem mengimplementasikan *bypass* khusus bagi akun dengan username `akun.demo`. Setiap proses check-in yang dilakukan oleh akun demo akan dilewatkan dari semua validasi waktu dan GPS, serta secara dinamis selalu disimpan sebagai status **"Hadir"** (warna hijau).
+
 ### 5.2 Fitur Pengajuan & Otorisasi Cuti (Auto-Potong Kuota)
 Fitur ini mengotomatisasi pemotongan hak sisa cuti tahunan karyawan secara aman demi transparansi perizinan.
 

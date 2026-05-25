@@ -1233,6 +1233,42 @@
                     </div>
                     
                     <p>JavaScript menghitung jarak linear terpendek <code>d</code> bumi bulat secara real-time. Jika <code>d &lt;= 500</code> meter, status absensi menjadi <strong>Dalam Jangkauan</strong> dan karyawan dipersilakan melakukan Check-In. Jika melebihi batas, tombol terkunci otomatis.</p>
+                    
+                    <h3 style="margin-top: 1.5rem; margin-bottom: 0.8rem;">Aturan Batas Waktu &amp; Keterlambatan Absensi (Lateness Rules):</h3>
+                    <p>Sistem backend secara otomatis memproses status kehadiran karyawan saat *Check In* berdasarkan zona waktu setempat (WITA / <code>Asia/Makassar</code>) dengan pembagian toleransi berikut:</p>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Kategori Waktu Check-In</th>
+                                    <th>Status Kehadiran</th>
+                                    <th>Keterangan / Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>00:00:00 s.d 08:00:00 pagi</strong></td>
+                                    <td><span class="role-badge allowed">Hadir</span></td>
+                                    <td>Tepat waktu, tidak dikenakan denda atau sanksi keterlambatan.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>08:00:01 s.d 09:00:00 pagi</strong></td>
+                                    <td><span class="role-badge" style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3);">Terlambat</span></td>
+                                    <td>Dikenakan status terlambat dan denda potongan sesuai kebijakan HRD.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Di atas 09:00:00 pagi</strong></td>
+                                    <td><span class="role-badge" style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);">Tidak Hadir</span></td>
+                                    <td>Dianggap Alfa / Mangkir kerja, otomatis dicatat merah sebagai tidak hadir.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Demo Bypass (Khusus <code>akun.demo</code>)</strong></td>
+                                    <td><span class="role-badge allowed">Hadir</span></td>
+                                    <td>Bypass instan untuk semua aturan waktu &amp; GPS demi kelancaran demo presentasi.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
