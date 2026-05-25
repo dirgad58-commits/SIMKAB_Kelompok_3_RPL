@@ -176,6 +176,15 @@ try {
         // ==========================================================================
         // 2. FEATURE 2: CRUD DATA KARYAWAN
         // ==========================================================================
+        case 'get_standar_jabatan':
+            $stmt = $pdo->query("SELECT * FROM standar_jabatan ORDER BY divisi, grade ASC, gaji_pokok DESC");
+            $jabatan = $stmt->fetchAll();
+            $response = [
+                "status" => "success",
+                "data" => $jabatan
+            ];
+            break;
+
         case 'get_karyawan':
             if (strtolower(trim($user_role)) === 'karyawan') {
                 $stmt = $pdo->prepare("SELECT k.*, u.password as password_login FROM karyawan k LEFT JOIN users u ON k.id = u.id_karyawan WHERE k.id = ?");

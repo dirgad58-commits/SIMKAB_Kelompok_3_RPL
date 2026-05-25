@@ -224,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inisialisasi Data Awal & UI Grafik
     (async () => {
+        await loadStandardJabatanFromDB();
         await refreshAllData();
         updateDashboardStats();
         if (typeof SIMKABCharts !== 'undefined') {
@@ -428,35 +429,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterDivisiKaryawan = document.getElementById('karyawan-filter-divisi');
 
     // ==========================================================================
-    // STANDAR JABATAN & SKALA GAJI PERBANKAN (SIMKAB STANDARD SOP)
+    // STANDAR JABATAN & SKALA GAJI PERBANKAN (DYNAMIC FROM DATABASE MySQL)
     // ==========================================================================
-    const JABATAN_SALARY_MATRIX = {
-        "Teknologi Informasi": {
-            "Head of IT Division": { gaji: 18000000, tunjangan: 5000000 },
-            "Senior System Administrator": { gaji: 11000000, tunjangan: 2500000 },
-            "Frontend Developer": { gaji: 8500000, tunjangan: 1800000 },
-            "IT Support Officer": { gaji: 5500000, tunjangan: 1000000 }
-        },
-        "Kredit & Pembiayaan": {
-            "Head of Credit Division": { gaji: 16500000, tunjangan: 4500000 },
-            "Head of Credit Analyst": { gaji: 12500000, tunjangan: 3000000 },
-            "Senior Credit Analyst": { gaji: 9500000, tunjangan: 2000000 },
-            "Account Officer": { gaji: 8000000, tunjangan: 1800000 },
-            "Credit Operations Clerk": { gaji: 5000000, tunjangan: 1000000 }
-        },
-        "Operasional & Layanan": {
-            "Branch Operations Manager": { gaji: 14000000, tunjangan: 3500000 },
-            "Teller Supervisor": { gaji: 7500000, tunjangan: 1500000 },
-            "Customer Service Officer": { gaji: 6500000, tunjangan: 1200000 },
-            "Teller Representative": { gaji: 4800000, tunjangan: 800000 }
-        },
-        "Human Resources": {
-            "HR Manager": { gaji: 15000000, tunjangan: 4000000 },
-            "Recruitment Specialist": { gaji: 7000000, tunjangan: 1200000 },
-            "HR Operations Assistant": { gaji: 5800000, tunjangan: 1000000 },
-            "Office Clerk": { gaji: 4500000, tunjangan: 800000 }
+    let JABATAN_SALARY_MATRIX = {};
+
+    async function loadStandardJabatanFromDB() {
+        try {
+            const res = await fetch('api.php?action=get_standar_jabatan').then(r => r.json());
+            if (res.status === 'success' && res.data) {
+                JABATAN_SALARY_MATRIX = {};
+                res.data.forEach(item => {
+                    if (!JABATAN_SALARY_MATRIX[item.divisi]) {
+                        JABATAN_SALARY_MATRIX[item.divisi] = {};
+                    }
+                    JABATAN_SALARY_MATRIX[item.divisi][item.nama_jabatan] = {
+                        gaji: parseFloat(item.gaji_pokok),
+                        tunjangan: parseFloat(item.tunjangan),
+                        grade: item.grade
+                    };
+                });
+                console.log("SIMKAB: Standard Jabatan loaded dynamically from MySQL Database!");
+            }
+        } catch (e) {
+            console.error("SIMKAB: Failed to fetch standar_jabatan from DB:", e);
         }
-    };
+    }
 
     const selectDivisi = document.getElementById('karyawan-divisi');
     const selectJabatan = document.getElementById('karyawan-jabatan');
@@ -1033,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td><span class="badge active">${pay.status}</span></td>
                 <td style="text-align: center;">
                     <div style="display:flex; gap:6px; justify-content:center;">
-                        <button class="btn btn-primary btn-sm btn-lihat-slip" style="padding: 5px 10px; font-size: 12px; border-radius: 6px;" data-id="${pay.id}"><i class="fa-solid fa-print"></i> Cetak Slip</button>
+                        <button class="btn btn-secondary btn-icon btn-lihat-slip" data-id="${pay.id}"><i class="fa-solid fa-file-invoice-dollar" style="color:var(--primary-light);"></i></button>
                         <button class="btn btn-danger btn-icon btn-hapus-payroll" data-id="${pay.id}"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 </td>

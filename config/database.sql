@@ -255,5 +255,34 @@ CREATE TABLE IF NOT EXISTS `pelamar` (
     `tanggal_apply` DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------------------------
+-- 12. TABEL STANDAR JABATAN & SKALA GAJI (standar_jabatan)
+-- --------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `standar_jabatan` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `divisi` VARCHAR(50) NOT NULL,
+    `nama_jabatan` VARCHAR(100) NOT NULL UNIQUE,
+    `gaji_pokok` DECIMAL(15,2) NOT NULL,
+    `tunjangan` DECIMAL(15,2) NOT NULL,
+    `grade` VARCHAR(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `standar_jabatan` (`divisi`, `nama_jabatan`, `gaji_pokok`, `tunjangan`, `grade`) VALUES
+('Teknologi Informasi', 'Head of IT Division', 18000000.00, 5000000.00, 'Grade 1'),
+('Teknologi Informasi', 'Senior System Administrator', 11000000.00, 2500000.00, 'Grade 2'),
+('Teknologi Informasi', 'Frontend Developer', 8500000.00, 1800000.00, 'Grade 3'),
+('Teknologi Informasi', 'IT Support Officer', 5500000.00, 1000000.00, 'Grade 4'),
+('Kredit & Pembiayaan', 'Head of Credit Division', 16500000.00, 4500000.00, 'Grade 1'),
+('Kredit & Pembiayaan', 'Head of Credit Analyst', 12500000.00, 3000000.00, 'Grade 1'),
+('Kredit & Pembiayaan', 'Senior Credit Analyst', 9500000.00, 2000000.00, 'Grade 2'),
+('Kredit & Pembiayaan', 'Account Officer', 8000000.00, 1800000.00, 'Grade 3'),
+('Kredit & Pembiayaan', 'Credit Operations Clerk', 5000000.00, 1000000.00, 'Grade 4'),
+('Operasional & Layanan', 'Branch Operations Manager', 14000000.00, 3500000.00, 'Grade 1'),
+('Operasional & Layanan', 'Teller Supervisor', 7500000.00, 1500000.00, 'Grade 2'),
+('Operasional & Layanan', 'Customer Service Officer', 6500000.00, 1200000.00, 'Grade 3'),
+('Operasional & Layanan', 'Teller Representative', 4800000.00, 800000.00, 'Grade 4'),
+('Human Resources', 'HR Manager', 15000000.00, 4000000.00, 'Grade 1'),
+('Human Resources', 'Recruitment Specialist', 7000000.00, 1200000.00, 'Grade 2'),
+('Human Resources', 'HR Operations Assistant', 5800000.00, 1000000.00, 'Grade 3'),
+('Human Resources', 'Office Clerk', 4500000.00, 800000.00, 'Grade 4');
 
