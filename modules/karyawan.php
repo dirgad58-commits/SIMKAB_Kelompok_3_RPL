@@ -134,16 +134,18 @@
                     </div>
                     <div class="form-group">
                         <label for="karyawan-jabatan">Jabatan Struktural</label>
-                        <input type="text" id="karyawan-jabatan" class="form-control" placeholder="Contoh: Teller, System Admin" required>
+                        <select id="karyawan-jabatan" class="form-control" required disabled>
+                            <option value="">Pilih Divisi Terlebih Dahulu</option>
+                        </select>
                     </div>
                     <div class="form-grid full-width" style="grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div class="form-group">
-                            <label for="karyawan-gaji">Gaji Pokok (Rp)</label>
-                            <input type="number" id="karyawan-gaji" class="form-control" placeholder="Gaji Pokok" required>
+                            <label for="karyawan-gaji">Gaji Pokok (Rp) - Auto</label>
+                            <input type="number" id="karyawan-gaji" class="form-control" placeholder="Gaji Pokok Otomatis" readonly required>
                         </div>
                         <div class="form-group">
-                            <label for="karyawan-tunjangan">Tunjangan Jabatan (Rp)</label>
-                            <input type="number" id="karyawan-tunjangan" class="form-control" placeholder="Tunjangan" required>
+                            <label for="karyawan-tunjangan">Tunjangan Jabatan (Rp) - Auto</label>
+                            <input type="number" id="karyawan-tunjangan" class="form-control" placeholder="Tunjangan Otomatis" readonly required>
                         </div>
                     </div>
                     <div class="form-group">

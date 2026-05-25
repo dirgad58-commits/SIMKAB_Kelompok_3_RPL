@@ -427,10 +427,101 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputSearchKaryawan = document.getElementById('karyawan-search');
     const filterDivisiKaryawan = document.getElementById('karyawan-filter-divisi');
 
+    // ==========================================================================
+    // STANDAR JABATAN & SKALA GAJI PERBANKAN (SIMKAB STANDARD SOP)
+    // ==========================================================================
+    const JABATAN_SALARY_MATRIX = {
+        "Teknologi Informasi": {
+            "Head of IT Division": { gaji: 18000000, tunjangan: 5000000 },
+            "Senior System Administrator": { gaji: 11000000, tunjangan: 2500000 },
+            "Frontend Developer": { gaji: 8500000, tunjangan: 1800000 },
+            "IT Support Officer": { gaji: 5500000, tunjangan: 1000000 }
+        },
+        "Kredit & Pembiayaan": {
+            "Head of Credit Division": { gaji: 16500000, tunjangan: 4500000 },
+            "Head of Credit Analyst": { gaji: 12500000, tunjangan: 3000000 },
+            "Senior Credit Analyst": { gaji: 9500000, tunjangan: 2000000 },
+            "Account Officer": { gaji: 8000000, tunjangan: 1800000 },
+            "Credit Operations Clerk": { gaji: 5000000, tunjangan: 1000000 }
+        },
+        "Operasional & Layanan": {
+            "Branch Operations Manager": { gaji: 14000000, tunjangan: 3500000 },
+            "Teller Supervisor": { gaji: 7500000, tunjangan: 1500000 },
+            "Customer Service Officer": { gaji: 6500000, tunjangan: 1200000 },
+            "Teller Representative": { gaji: 4800000, tunjangan: 800000 }
+        },
+        "Human Resources": {
+            "HR Manager": { gaji: 15000000, tunjangan: 4000000 },
+            "Recruitment Specialist": { gaji: 7000000, tunjangan: 1200000 },
+            "HR Operations Assistant": { gaji: 5800000, tunjangan: 1000000 },
+            "Office Clerk": { gaji: 4500000, tunjangan: 800000 }
+        }
+    };
+
+    const selectDivisi = document.getElementById('karyawan-divisi');
+    const selectJabatan = document.getElementById('karyawan-jabatan');
+    const inputGaji = document.getElementById('karyawan-gaji');
+    const inputTunjangan = document.getElementById('karyawan-tunjangan');
+
+    function populateStandardJabatan(divisiValue, preselectedValue = "") {
+        if (!selectJabatan) return;
+        selectJabatan.innerHTML = '';
+        
+        if (!divisiValue || !JABATAN_SALARY_MATRIX[divisiValue]) {
+            selectJabatan.innerHTML = '<option value="">Pilih Divisi Terlebih Dahulu</option>';
+            selectJabatan.disabled = true;
+            if (inputGaji) inputGaji.value = '';
+            if (inputTunjangan) inputTunjangan.value = '';
+            return;
+        }
+
+        selectJabatan.disabled = false;
+        selectJabatan.innerHTML = '<option value="">-- Pilih Jabatan Standard --</option>';
+        
+        const jabatans = JABATAN_SALARY_MATRIX[divisiValue];
+        for (const jb in jabatans) {
+            const opt = document.createElement('option');
+            opt.value = jb;
+            opt.textContent = jb;
+            selectJabatan.appendChild(opt);
+        }
+
+        if (preselectedValue) {
+            selectJabatan.value = preselectedValue;
+            updateStandardSalaries(divisiValue, preselectedValue);
+        }
+    }
+
+    function updateStandardSalaries(divisiValue, jabatanValue) {
+        if (!inputGaji || !inputTunjangan) return;
+        
+        if (divisiValue && jabatanValue && JABATAN_SALARY_MATRIX[divisiValue] && JABATAN_SALARY_MATRIX[divisiValue][jabatanValue]) {
+            const scale = JABATAN_SALARY_MATRIX[divisiValue][jabatanValue];
+            inputGaji.value = scale.gaji;
+            inputTunjangan.value = scale.tunjangan;
+        } else {
+            inputGaji.value = '';
+            inputTunjangan.value = '';
+        }
+    }
+
+    if (selectDivisi) {
+        selectDivisi.addEventListener('change', () => {
+            populateStandardJabatan(selectDivisi.value);
+        });
+    }
+
+    if (selectJabatan) {
+        selectJabatan.addEventListener('change', () => {
+            updateStandardSalaries(selectDivisi.value, selectJabatan.value);
+        });
+    }
+
     // Buka Modal Tambah
     if (btnTambahKaryawan) {
         btnTambahKaryawan.addEventListener('click', () => {
             formKaryawan.reset();
+            populateStandardJabatan("");
             document.getElementById('karyawan-id').value = '';
             document.getElementById('karyawan-password').value = '';
             document.getElementById('modal-karyawan-title').innerHTML = '<i class="fa-solid fa-user-plus"></i> Tambah Karyawan Baru';
@@ -714,7 +805,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('karyawan-email').value = emp.email;
                     document.getElementById('karyawan-telepon').value = emp.telepon;
                     document.getElementById('karyawan-divisi').value = emp.divisi;
-                    document.getElementById('karyawan-jabatan').value = emp.jabatan;
+                    
+                    // Populate standardized jabatan options, then pre-select current one
+                    populateStandardJabatan(emp.divisi, emp.jabatan);
+
                     document.getElementById('karyawan-gaji').value = emp.gajiPokok;
                     document.getElementById('karyawan-tunjangan').value = emp.tunjangan;
                     document.getElementById('karyawan-tglbergabung').value = emp.tanggalBergabung;
