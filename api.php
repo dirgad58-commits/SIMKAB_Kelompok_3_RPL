@@ -11,6 +11,8 @@ date_default_timezone_set('Asia/Makassar');
 if (!file_exists(__DIR__ . '/sessions')) { mkdir(__DIR__ . '/sessions', 0777, true); }
 
 session_save_path(__DIR__ . '/sessions');
+@session_start();
+$user_role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 $id_karyawan_session = isset($_SESSION['id_karyawan']) ? $_SESSION['id_karyawan'] : '';
 
 // Set Response Header ke JSON
